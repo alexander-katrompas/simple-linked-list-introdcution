@@ -32,23 +32,31 @@ int main(){
     Node *node3;
     node3 = new Node;
     
+    
+    node1->data.id = 1; // put data in node1
     node1->data.data = "Hello"; // put data in node1
+
+    node2.data.id = 2; // put data in node2 (note the . instead of -> because node2 was statically allocated)
     node2.data.data = "World"; // put data in node2
+
+    node3->data.id = 3; // put data in node3
     node3->data.data = "Linked Lists are awesome!"; // put data in node3
     
     // build a linked list (of size 3) out of them
     head = node1; // first point the head at node1
     node1->prev = NULL; // point node1 prev to NULL because there is no previous
     node1->next = &node2; // point node1 next to node2 (note the & because it was statically allocated)
-    node2.prev = node1; // point node2 back to node1 (not the . notation because it was statically allocated)
-    node2.next = node3; // point node2 next to node3
-    node3->prev = &node2; // point node3 back to node2 (note the & because it was statically allocated)
-    node3->next = NULL; // point node2 next to NULL because there is no next
+    node2.prev = node1; // point node2 back to node1 (note the . notation because it was statically allocated)
+                        // also note node1 does not need & to reference it, because it was dynamically allocated
+    node2.next = node3; // point node2 next to node3 (note the . notation because it was statically allocated)
+                        // also note node3 does not need & to reference it, because it was dynamically allocated
+    node3->prev = &node2; // point node3 back to node2 (note the & because node2 was statically allocated)
+    node3->next = NULL;   // point node3 next to NULL because there is no next
     
     // prove it's a linked list, traverse it forward
     Node *current = head; // start a "tracking" pointer by pointing it head
     while(current){ // as long as we're not at the end, keep going
-        cout << current->data.data << endl;
+        cout << current->data.id << ": " << current->data.data << endl;
         current = current->next; // go to the next node
     }
 
@@ -68,8 +76,8 @@ int main(){
     
     // now traverse it backward
     while(current){
-        cout << current->data.data << endl;
-        current = current->prev;
+       cout << current->data.id << ": " << current->data.data << endl;
+       current = current->prev;
     }
 
     return 0;
